@@ -3,13 +3,24 @@
 
 from tkinter import *
 
-fenetre = Tk()
+class Window:
 
-label = Label(fenetre, text="D3EI")
-label.pack()
+    def __init__(self):
+        self.tk = Tk()
+        # fullscreen manager
+        self.state = False
+        self.tk.bind("<F11>", self.toggle_fullscreen)
+        self.tk.bind("<Escape>", self.end_fullscreen)
+        # title
+        title = Label(self.tk, text="D3EI", font=("Purisa", 40))
+        title.pack(side=TOP, pady=15)
 
-# bouton de sortie
-bouton=Button(fenetre, text="Fermer", command=fenetre.quit)
-bouton.pack()
+    def toggle_fullscreen(self, event=None):
+        self.state = not self.state  # Just toggling the boolean
+        self.tk.attributes("-fullscreen", self.state)
+        return "break"
 
-fenetre.mainloop()
+    def end_fullscreen(self, event=None):
+        self.state = False
+        self.tk.attributes("-fullscreen", False)
+        return "break"
