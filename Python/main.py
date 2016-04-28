@@ -3,10 +3,9 @@ import time
 from interface import Window
 from com import Serial
 
-stats = [{"name": "John", "conso": 20}, {"name": "Tom", "conso": 10}, {"name": "Bill", "conso": 15}]
-
 window = Window()
 arduino = Serial()
+arduino.nb = [0,False,False,False]
 
 def minmax(array):
     M = 0
@@ -26,30 +25,50 @@ def moyenne(array):
     myn = myn/len(array)
     return myn
 
+def findi(array, field, test):
+    out = None
+    for i in range(len(array)):
+        if array[i][field] == test:
+            out = i
+    return out
+
 class Main(threading.Thread):
     def run(self):
+        stats = [{"name": "John", "conso": 20}, {"name": "Tom", "conso": 5}, {"name": "Bill", "conso": 15}]
+        user = "User 1"
+        window.name.set(user)
+        stats.append({"name": window.name.get(), "conso": 0})
         rdm = 0
         while 1:
-            print(arduino)
+            
             # Demarage
-            if arduino.run.nb[0] == True:
+            if arduino.nb[1] == True:
+                arduino.nb[2] = False
                 if "User" in window.name.get():
                     rdm += 1
-                    window.name.set("User " + str(rdm))
-                window.conso = "0L"
-                stats.pop({"name": window.name.get(), "conso": 0})
-            #
-            myn = moyenne(stats)
+                    user = "User " + str(rdm)
+                    window.name.set(user)
+                user = window.name.get()
+                if not findi(stats, "name", user):
+                    stats.append({"name": window.name.get(), "conso": 0})
+                arduino.nb[1] = False
+
+            print(stats)
+            print(user)
+            # Update quantity
+            if not arduino.nb[2]:
+                window.conso.set(str(arduino.nb[0])+"L")
+                stats[findi(stats, "name", user)]["conso"] = arduino.nb[0]
+                   
+            myn = round(moyenne(stats))
             window.moyenne.set(str(myn)+"L")
             mn, mx = minmax(stats)
             window.mn.set(mn["name"] + " a le moins conssommé: " + str(mn["conso"]) + "L")
             window.mx.set(mx["name"] + " a le plus conssommé: " + str(mx["conso"]) + "L")
-            time.sleep(2)
+            #time.sleep(0.5)
 
 loop = Main()
-loop.daemon = True
 loop.start()
-arduino.daemon = True
 arduino.start()
 
 window.tk.mainloop()

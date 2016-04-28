@@ -17,7 +17,7 @@ class Window:
         name_frame = Frame(self.tk, borderwidth=2, relief=GROOVE)
         name_frame.pack(side=TOP, padx=30, pady=30)
         self.name = StringVar()
-        self.name.set("Random")
+        self.name.set("User")
         Label(name_frame, text="Nom:", font=("Purisa", 20)).pack(side=LEFT, padx=30, pady=15)
         Entry(name_frame, textvariable=self.name, font=("Purisa", 18), width=100).pack(side=TOP, padx=30, pady=30)
         # conso_frame
@@ -25,15 +25,15 @@ class Window:
         conso_frame.pack(side=TOP, padx=30, pady=30)
         self.conso = StringVar()
         self.conso.set("50L")
-        Label(conso_frame, text="Consomation:", font=("Purisa", 20)).pack(side=LEFT, padx=30, pady=15)
+        Label(conso_frame, text="Consommation:", font=("Purisa", 20)).pack(side=LEFT, padx=30, pady=15)
         Label(conso_frame, textvariable=self.conso, font=("Purisa", 20)).pack(side=LEFT, padx=30, pady=15)
         # record_frame
         record_frame = Frame(self.tk, borderwidth=2, relief=GROOVE)
         record_frame.pack(side=TOP, padx=30, pady=30)
         self.mx = StringVar()
-        self.mx.set("Random a le plus conssommé: 50L")
+        self.mx.set("Random a le plus consommé: 50L")
         self.mn = StringVar()
-        self.mn.set("Random a le moins conssommé: 2L")
+        self.mn.set("Random a le moins consommé: 2L")
         Label(record_frame, textvariable=self.mx, font=("Purisa", 20)).pack(side=TOP, padx=30, pady=15)
         Label(record_frame, textvariable=self.mn, font=("Purisa", 20)).pack(side=TOP, padx=30, pady=15)
         # moyenne_frame
