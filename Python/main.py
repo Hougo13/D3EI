@@ -30,8 +30,15 @@ class Main(threading.Thread):
     def run(self):
         rdm = 0
         while 1:
-            rdm += 1
-            window.name.set("User " + str(rdm))
+            print(arduino)
+            # Demarage
+            if arduino.run.nb[0] == True:
+                if "User" in window.name.get():
+                    rdm += 1
+                    window.name.set("User " + str(rdm))
+                window.conso = "0L"
+                stats.pop({"name": window.name.get(), "conso": 0})
+            #
             myn = moyenne(stats)
             window.moyenne.set(str(myn)+"L")
             mn, mx = minmax(stats)
