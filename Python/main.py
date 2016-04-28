@@ -6,9 +6,7 @@ from com import Serial
 stats = [{"name": "John", "conso": 20}, {"name": "Tom", "conso": 10}, {"name": "Bill", "conso": 15}]
 
 window = Window()
-# arduino = Serial()
-#
-# print(arduino.get_msg())
+arduino = Serial()
 
 def minmax(array):
     M = 0
@@ -44,6 +42,8 @@ class Main(threading.Thread):
 loop = Main()
 loop.daemon = True
 loop.start()
+arduino.daemon = True
+arduino.start()
 
 window.tk.mainloop()
 loop._stop()
